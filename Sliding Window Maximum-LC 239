@@ -1,0 +1,47 @@
+	/**
+		You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+
+	Return the max sliding window.
+
+	 
+
+	Example 1:
+
+	Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+	Output: [3,3,5,5,6,7]
+	Explanation: 
+	Window position                Max
+	---------------               -----
+	[1  3  -1] -3  5  3  6  7       3
+	 1 [3  -1  -3] 5  3  6  7       3
+	 1  3 [-1  -3  5] 3  6  7       5
+	 1  3  -1 [-3  5  3] 6  7       5
+	 1  3  -1  -3 [5  3  6] 7       6
+	 1  3  -1  -3  5 [3  6  7]      7
+	*/
+  
+  // Trial 1 - We could create a variable max and keep a maximum for a window, but it fails whne we remove the next possible max of window,
+  // Solution Trial 1 - We should create a list and keep the possible numbers there, but once the window is reached, we should remove
+  // unnecessary items to the left of max, as when window slides, we would not need them, only the ones on right of max are proable candidates
+  var maxSlidingWindow = (arr, k) => { 
+  let i=0,j=0, result=[], list = [];
+  while(j < arr.length){
+  // Calculate for j, if we have values which are lesser in list before this, remove => As we would need to consider only the last elemnet
+  while(list.length > 0 && list[list.length-1] < arr[j]){
+            list.pop();
+        }
+      list.push(arr[j]);
+  if(j-i+1 < k){
+    j++;
+  }else if(j-i+1 == k){
+    result.push(list[0]);
+      
+    if(arr[i] == list[0]){
+      list.shift()
+    }
+      
+      i++;j++;
+  }
+  }
+  return result;
+  }
