@@ -1,0 +1,33 @@
+	/**
+		You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+
+	Return the first negative number in the given window.
+
+	 
+
+	Example 1:
+
+	Input: nums = [12,-1,-7,8,-15,30,16,28], k = 3
+	Output: [-1,-1,-7,-15,-15,-1]
+	
+	*/
+var firstNegativeSubArray = (arr, k) => {
+let result = [], i=0, j=0, list = [];
+while(j< arr.length){
+if(arr[j] < 0){
+	list.push(arr[j])
+}
+
+if(j-i+1 < k){
+	j++;
+}else if(j-i+1 == k){
+	result.push(list[0] ?list[0]: -1);
+    if(list[0] == arr[i]){
+    list.shift();
+    }
+    i++;
+    j++;
+}
+}
+return result
+}
